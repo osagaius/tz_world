@@ -41,10 +41,8 @@ defmodule TzWorld do
   end
 
   defp read_data do
-    {:ok, [data_file]} = :zip.unzip(to_charlist(@data_archive))
-    data_file
-    |> File.read!()
-    |> :erlang.binary_to_term()
+    data_file = System.get_env("HOME") <> "/priv/timezones.data"
+    data_file |> File.read!() |> :erlang.binary_to_term()
   end
 
   def handle_call({:timezone_at, %Geo.Point{} = point}, _from, state) do
